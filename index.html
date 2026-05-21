@@ -5,21 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Botho University Academic Calendar</title>
   <style>
-    /* Global Styles */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       min-height: 100vh;
-      background-color: #ffffff;
+      background: #f6f4f0;
       font-family: 'Georgia', 'Times New Roman', serif;
-      color: #111111;
-      padding-bottom: 60px;
+      color: #111;
+      padding-bottom: 100px;
     }
 
-    /* Header */
+    /* ── HEADER ─────────────────────────────────── */
     .header {
       background: linear-gradient(90deg, #800000 0%, #4a0000 100%);
       border-bottom: 4px solid #d4a017;
@@ -29,459 +25,332 @@
       overflow: hidden;
     }
     .header-pattern {
-      position: absolute; 
-      inset: 0;
-      background-image: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.03) 39px, rgba(255,255,255,0.03) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.03) 39px, rgba(255,255,255,0.03) 40px);
-      pointer-events: none;
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(255,255,255,.03) 39px,rgba(255,255,255,.03) 40px),
+        repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(255,255,255,.03) 39px,rgba(255,255,255,.03) 40px);
     }
-    .tagline {
-      font-size: 11px; 
-      letter-spacing: 4px; 
-      color: #d4a017; 
-      text-transform: uppercase; 
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-    .title {
-      font-size: clamp(24px, 6vw, 36px); 
-      font-weight: bold; 
-      color: #ffffff; 
-      letter-spacing: 1px;
-    }
-    .subtitle {
-      font-size: clamp(14px, 3vw, 18px); 
-      color: #f3e8e8; 
-      margin-top: 6px; 
-      font-style: italic;
-    }
+    .tagline { font-size:11px; letter-spacing:4px; color:#d4a017; text-transform:uppercase; margin-bottom:6px; font-weight:bold; }
+    .uni-title { font-size:clamp(24px,6vw,36px); font-weight:bold; color:#fff; letter-spacing:1px; }
+    .subtitle { font-size:clamp(14px,3vw,18px); color:#f3e8e8; margin-top:6px; font-style:italic; }
 
-    /* Controls & Utilities */
-    .container {
-      max-width: 540px;
-      margin: 0 auto;
-      padding: 0 16px;
-    }
-    .campus-filters {
-      margin-top: 20px; 
-      display: flex; 
-      justify-content: center; 
-      gap: 8px; 
-      flex-wrap: wrap;
-    }
+    .campus-filters { margin-top:20px; display:flex; justify-content:center; gap:8px; flex-wrap:wrap; }
     .filter-btn {
-      padding: 6px 14px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.15);
-      color: #ffffff;
-      font-size: 12px;
-      cursor: pointer;
-      font-family: inherit;
-      letter-spacing: 0.5px;
-      transition: all 0.2s;
-      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      padding:6px 14px; border-radius:20px; background:rgba(255,255,255,.15);
+      color:#fff; font-size:12px; cursor:pointer; font-family:inherit;
+      letter-spacing:.5px; transition:all .2s; border:1.5px solid rgba(255,255,255,.25);
     }
-    .filter-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
-    }
-    .filter-btn.active {
-      border: 1.5px solid #d4a017;
-      background: #d4a017;
-      color: #800000;
-      font-weight: 700;
-    }
-    .search-container {
-      margin-top: 18px;
-      display: flex;
-      justify-content: center;
-    }
+    .filter-btn:hover { background:rgba(255,255,255,.3); }
+    .filter-btn.active { border-color:#d4a017; background:#d4a017; color:#800000; font-weight:700; }
+
+    .search-container { margin-top:18px; display:flex; justify-content:center; }
     .search-input {
-      width: 100%;
-      max-width: 400px;
-      padding: 10px 16px;
-      border-radius: 8px;
-      border: 2px solid rgba(255,255,255,0.3);
-      background: rgba(255, 255, 255, 0.95);
-      color: #111111;
-      font-family: inherit;
-      font-size: 14px;
-      outline: none;
-      transition: all 0.2s;
+      width:100%; max-width:400px; padding:10px 16px;
+      border-radius:8px; border:2px solid rgba(255,255,255,.3);
+      background:rgba(255,255,255,.95); color:#111;
+      font-family:inherit; font-size:14px; outline:none; transition:all .2s;
     }
-    .search-input:focus {
-      border-color: #d4a017;
-      box-shadow: 0 0 12px rgba(212,160,23,0.4);
-    }
+    .search-input:focus { border-color:#d4a017; box-shadow:0 0 12px rgba(212,160,23,.4); }
 
-    /* Month Navigation */
-    .month-nav {
-      display: flex; 
-      align-items: center; 
-      justify-content: space-between; 
-      padding: 24px 8px 0;
-    }
+    /* ── LAYOUT ──────────────────────────────────── */
+    .container { max-width:540px; margin:0 auto; padding:0 16px; }
+
+    /* ── MONTH NAV ───────────────────────────────── */
+    .month-nav { display:flex; align-items:center; justify-content:space-between; padding:24px 8px 0; }
     .nav-btn {
-      background: #ffffff; 
-      border: 2px solid #800000; 
-      color: #800000;
-      border-radius: 8px; 
-      padding: 6px 14px; 
-      cursor: pointer;
-      font-size: 18px; 
-      font-weight: bold;
-      font-family: inherit;
-      transition: all 0.2s;
+      background:#fff; border:2px solid #800000; color:#800000;
+      border-radius:8px; padding:6px 14px; cursor:pointer;
+      font-size:18px; font-weight:bold; font-family:inherit; transition:all .2s;
     }
-    .nav-btn:hover:not(:disabled) {
-      background: #800000;
-      color: #ffffff;
-    }
-    .nav-btn:disabled {
-      opacity: 0.25;
-      cursor: not-allowed;
-    }
-    .month-title {
-      font-size: 24px; 
-      font-weight: bold; 
-      color: #800000;
-      text-align: center;
-    }
-    .month-sub {
-      font-size: 11px; 
-      color: #666666; 
-      letter-spacing: 2px; 
-      text-transform: uppercase;
-      text-align: center;
-      margin-top: 2px;
-    }
+    .nav-btn:hover:not(:disabled) { background:#800000; color:#fff; }
+    .nav-btn:disabled { opacity:.25; cursor:not-allowed; }
+    .month-title { font-size:24px; font-weight:bold; color:#800000; text-align:center; }
+    .month-sub { font-size:11px; color:#666; letter-spacing:2px; text-transform:uppercase; text-align:center; margin-top:2px; }
 
-    /* Calendar Grid */
-    .calendar-grid {
-      margin-top: 20px;
-    }
-    .dow-headers {
-      display: grid; 
-      grid-template-columns: repeat(7, 1fr); 
-      gap: 6px; 
-      margin-bottom: 8px;
-    }
-    .dow-cell {
-      text-align: center; 
-      font-size: 12px; 
-      color: #555555; 
-      font-weight: bold;
-      letter-spacing: 0.5px; 
-      padding: 4px 0; 
-      text-transform: uppercase;
-    }
-    .days-grid {
-      display: grid; 
-      grid-template-columns: repeat(7, 1fr); 
-      gap: 6px;
-    }
+    /* ── CALENDAR GRID ───────────────────────────── */
+    .calendar-grid { margin-top:20px; }
+    .dow-headers { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin-bottom:8px; }
+    .dow-cell { text-align:center; font-size:12px; color:#555; font-weight:bold; letter-spacing:.5px; padding:4px 0; text-transform:uppercase; }
+    .days-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
     .day-cell {
-      min-height: 56px;
-      border-radius: 8px;
-      border: 1.5px solid #e5e7eb;
-      background: #f9fafb;
-      padding: 6px 4px 4px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      transition: all 0.15s;
+      min-height:56px; border-radius:8px; border:1.5px solid #e5e7eb;
+      background:#f9fafb; padding:6px 4px 4px;
+      display:flex; flex-direction:column; align-items:center; gap:4px; transition:all .15s;
     }
-    .day-cell.has-events {
-      background: #ffffff;
-      border-color: #cdcfd4;
-      cursor: pointer;
-    }
-    .day-cell.has-events:hover {
-      border-color: #800000;
-      background: #fffafb;
-    }
-    .day-cell.selected {
-      border: 2px solid #800000;
-      background: #fff5f5;
-      transform: scale(1.03);
-      box-shadow: 0 4px 12px rgba(128, 0, 0, 0.15);
-    }
-    .day-cell.today {
-      border: 2px solid #2563eb;
-      background: #f0f5ff;
-    }
-    .day-num {
-      font-size: 14px;
-      color: #9ca3af;
-    }
-    .day-cell.has-events .day-num { color: #111111; font-weight: 700; }
-    .day-cell.today .day-num { color: #2563eb; font-weight: 700; }
+    .day-cell.has-events { background:#fff; border-color:#cdcfd4; cursor:pointer; }
+    .day-cell.has-events:hover { border-color:#800000; background:#fffafb; }
+    .day-cell.selected { border:2px solid #800000; background:#fff5f5; transform:scale(1.03); box-shadow:0 4px 12px rgba(128,0,0,.15); }
+    .day-cell.today { border:2px solid #2563eb; background:#f0f5ff; }
+    .day-num { font-size:14px; color:#9ca3af; }
+    .day-cell.has-events .day-num { color:#111; font-weight:700; }
+    .day-cell.today .day-num { color:#2563eb; font-weight:700; }
+    .dots-container { display:flex; gap:3px; flex-wrap:wrap; justify-content:center; }
+    .dot { width:6px; height:6px; border-radius:50%; }
 
-    .dots-container {
-      display: flex; 
-      gap: 3px; 
-      flex-wrap: wrap; 
-      justify-content: center;
-    }
-    .dot {
-      width: 6px; 
-      height: 6px; 
-      border-radius: 50%;
-    }
+    /* ── LEGEND ──────────────────────────────────── */
+    .legend { margin:20px auto 0; display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
+    .legend-item { display:flex; align-items:center; gap:6px; font-size:12px; color:#444; }
+    .legend-dot { width:10px; height:10px; border-radius:50%; }
 
-    /* Legend */
-    .legend {
-      margin: 20px auto 0; 
-      display: flex; 
-      gap: 14px; 
-      flex-wrap: wrap; 
-      justify-content: center;
-    }
-    .legend-item {
-      display: flex; 
-      align-items: center; 
-      gap: 6px;
-      font-size: 12px; 
-      color: #444444;
-    }
-    .legend-dot {
-      width: 10px; 
-      height: 10px; 
-      border-radius: 50%;
-    }
-
-    /* Panels & Lists */
+    /* ── SECTION HEADING ─────────────────────────── */
     .section-heading {
-      font-size: 16px;
-      font-weight: bold;
-      color: #800000;
-      margin: 32px 0 14px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      border-left: 4px solid #800000;
-      padding-left: 10px;
+      font-size:16px; font-weight:bold; color:#800000;
+      margin:32px 0 14px; letter-spacing:1px; text-transform:uppercase;
+      border-left:4px solid #800000; padding-left:10px;
+      display:flex; align-items:center; justify-content:space-between;
     }
+    .btn-open-dashboard {
+      font-size:12px; font-weight:700; letter-spacing:.5px;
+      background:#800000; color:#fff; border:none;
+      padding:6px 14px; border-radius:20px; cursor:pointer;
+      font-family:inherit; transition:background .2s;
+      display:flex; align-items:center; gap:5px; white-space:nowrap;
+    }
+    .btn-open-dashboard:hover { background:#a00000; }
+
+    /* ── PANELS ──────────────────────────────────── */
     .event-panel, .upcoming-panel {
-      background: #ffffff;
-      border: 1.5px solid #e5e7eb;
-      border-radius: 12px;
-      overflow: hidden;
-      margin-top: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+      background:#fff; border:1.5px solid #e5e7eb;
+      border-radius:12px; overflow:hidden; margin-top:20px;
+      box-shadow:0 4px 10px rgba(0,0,0,.04);
     }
-    .event-panel {
-      border-color: #800000;
-      box-shadow: 0 12px 30px rgba(128, 0, 0, 0.12);
-      animation: fadeUp 0.2s ease;
-    }
+    .event-panel { border-color:#800000; box-shadow:0 12px 30px rgba(128,0,0,.12); animation:fadeUp .2s ease; }
     .panel-header {
-      background: #fff5f5;
-      padding: 14px 18px;
-      border-bottom: 1.5px solid rgba(128,0,0,0.15);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      background:#fff5f5; padding:14px 18px;
+      border-bottom:1.5px solid rgba(128,0,0,.15);
+      display:flex; justify-content:space-between; align-items:center;
     }
     .close-btn {
-      background: rgba(0,0,0,0.06); 
-      border: none; 
-      color: #444444;
-      border-radius: 50%; 
-      width: 28px; 
-      height: 28px; 
-      cursor: pointer;
-      font-size: 16px; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center;
+      background:rgba(0,0,0,.06); border:none; color:#444;
+      border-radius:50%; width:28px; height:28px; cursor:pointer;
+      font-size:16px; display:flex; align-items:center; justify-content:center;
     }
-    .close-btn:hover {
-      background: rgba(0,0,0,0.1);
-    }
-    .panel-body {
-      padding: 14px;
-    }
-    .no-events {
-      padding: 30px; 
-      text-align: center; 
-      color: #666666; 
-      font-size: 14px;
-      font-style: italic;
-    }
+    .close-btn:hover { background:rgba(0,0,0,.1); }
+    .panel-body { padding:14px; }
+    .no-events { padding:30px; text-align:center; color:#666; font-size:14px; font-style:italic; }
 
-    /* Event Cards */
+    /* ── EVENT CARDS ─────────────────────────────── */
     .event-card {
-      background: #fdfdfd;
-      border: 1.5px solid #e5e7eb;
-      border-radius: 8px;
-      padding: 14px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      background:#fdfdfd; border:1.5px solid #e5e7eb;
+      border-radius:8px; padding:12px 14px; margin-bottom:10px;
+      box-shadow:0 2px 4px rgba(0,0,0,.02);
     }
-    .event-card:last-child {
-      margin-bottom: 0;
+    .event-card:last-child { margin-bottom:0; }
+
+    /* Date chip row */
+    .event-date-row { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+    .date-chip {
+      display:inline-flex; align-items:center; gap:4px;
+      background:#800000; color:#fff;
+      font-size:11px; font-weight:700; letter-spacing:.3px;
+      padding:3px 9px; border-radius:10px; white-space:nowrap;
     }
-    .event-title {
-      font-weight: bold; 
-      color: #111111; 
-      font-size: 15px; 
-      line-height: 1.4;
+    .date-chip.custom-chip { background:#059669; }
+    .date-chip.range-end { background:#6b7280; }
+    .custom-tag {
+      font-size:10px; font-weight:700; color:#059669;
+      background:#d1fae5; padding:2px 7px; border-radius:8px; letter-spacing:.5px;
     }
-    .event-meta {
-      margin-top: 6px; 
-      display: flex; 
-      gap: 6px; 
-      flex-wrap: wrap; 
-      align-items: center;
-    }
-    .badge-type {
-      font-size: 11px; 
-      padding: 2px 8px; 
-      border-radius: 12px;
-      font-weight: bold; 
-      letter-spacing: 0.5px;
-    }
-    .badge-campus {
-      font-size: 11px; 
-      color: #444444; 
-      background: #e5e7eb; 
-      padding: 2px 8px; 
-      border-radius: 6px;
-      font-weight: 600;
-    }
+
+    .event-title { font-weight:bold; color:#111; font-size:15px; line-height:1.4; }
+    .event-meta { margin-top:6px; display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+    .badge-type { font-size:11px; padding:2px 8px; border-radius:12px; font-weight:bold; letter-spacing:.5px; }
+    .badge-campus { font-size:11px; color:#444; background:#e5e7eb; padding:2px 8px; border-radius:6px; font-weight:600; }
     .event-note {
-      margin-top: 6px; 
-      font-size: 12px; 
-      color: #b45309; 
-      font-style: italic;
-      background: #fffbeb;
-      padding: 4px 8px;
-      border-radius: 4px;
-      border-left: 2px solid #f59e0b;
+      margin-top:6px; font-size:12px; color:#b45309; font-style:italic;
+      background:#fffbeb; padding:4px 8px; border-radius:4px; border-left:2px solid #f59e0b;
     }
-    .event-duration {
-      margin-top: 6px; 
-      font-size: 12px; 
-      color: #555555;
-    }
+    .event-duration { margin-top:4px; font-size:11px; color:#888; }
 
-    /* Action Buttons */
-    .btn-group {
-      margin-top: 12px; 
-      display: flex; 
-      gap: 8px; 
-      flex-wrap: wrap;
-    }
+    /* ── BUTTONS ─────────────────────────────────── */
+    .btn-group { margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
     .btn-cal {
-      padding: 6px 14px;
-      background: #800000;
-      color: #ffffff;
-      border: none;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-family: inherit;
+      padding:6px 13px; background:#800000; color:#fff;
+      border:none; border-radius:6px; font-size:12px; font-weight:bold;
+      cursor:pointer; display:flex; align-items:center; gap:4px; font-family:inherit;
     }
-    .btn-cal:hover {
-      background: #a00000;
-    }
+    .btn-cal:hover { background:#a00000; }
     .btn-gcal {
-      padding: 6px 14px;
-      background: #ffffff;
-      color: #444444;
-      border: 1.5px solid #cdcfd4;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      text-decoration: none;
-      font-family: inherit;
+      padding:6px 13px; background:#fff; color:#444;
+      border:1.5px solid #cdcfd4; border-radius:6px;
+      font-size:12px; font-weight:bold; cursor:pointer;
+      display:flex; align-items:center; gap:4px;
+      text-decoration:none; font-family:inherit;
     }
-    .btn-gcal:hover {
-      background: #f9fafb;
-      border-color: #9ca3af;
+    .btn-gcal:hover { background:#f9fafb; border-color:#9ca3af; }
+    .btn-delete {
+      margin-left:auto; padding:5px 10px; background:none;
+      color:#dc2626; border:1.5px solid #fca5a5;
+      border-radius:6px; font-size:11px; cursor:pointer; font-family:inherit;
     }
-    
-    .footer-tip {
-      text-align: center; 
-      margin-top: 30px; 
-      color: #777777; 
-      font-size: 11px; 
-      letter-spacing: 1px;
-    }
+    .btn-delete:hover { background:#fef2f2; }
 
-    /* Animations & Hovers */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* ── FAB ─────────────────────────────────────── */
+    .fab {
+      position:fixed; bottom:26px; right:20px;
+      width:54px; height:54px; border-radius:50%;
+      background:linear-gradient(135deg,#800000,#d4a017);
+      color:#fff; font-size:28px; border:none; cursor:pointer;
+      box-shadow:0 4px 20px rgba(128,0,0,.45);
+      display:flex; align-items:center; justify-content:center;
+      transition:transform .25s; z-index:800;
     }
+    .fab:hover { transform:scale(1.12) rotate(90deg); }
 
+    /* ── DASHBOARD OVERLAY ───────────────────────── */
+    .overlay {
+      display:none; position:fixed; inset:0; z-index:900;
+      background:rgba(0,0,0,.5); align-items:flex-end; justify-content:center;
+    }
+    .overlay.open { display:flex; animation:fadeIn .2s ease; }
+    @media(min-width:540px){ .overlay.open { align-items:center; } }
+
+    .dashboard {
+      background:#fff; width:100%; max-width:540px;
+      max-height:92vh; overflow-y:auto;
+      border-radius:20px 20px 0 0;
+      box-shadow:0 -8px 40px rgba(0,0,0,.2);
+      animation:slideUp .28s ease;
+    }
+    @media(min-width:540px){ .dashboard { border-radius:16px; max-height:86vh; } }
+
+    .dash-handle { width:40px; height:4px; background:#e5e7eb; border-radius:2px; margin:14px auto 0; }
+    .dash-header {
+      background:linear-gradient(90deg,#800000,#4a0000);
+      padding:18px 20px; display:flex; justify-content:space-between; align-items:center;
+    }
+    .dash-header-title { color:#fff; font-size:18px; font-weight:bold; }
+    .dash-header-sub { color:#f3e8e8; font-size:12px; margin-top:3px; }
+    .dash-close {
+      background:rgba(255,255,255,.15); border:none; color:#fff;
+      border-radius:50%; width:32px; height:32px; cursor:pointer;
+      font-size:18px; display:flex; align-items:center; justify-content:center;
+    }
+    .dash-close:hover { background:rgba(255,255,255,.3); }
+
+    /* Tabs */
+    .dash-tabs { display:flex; border-bottom:2px solid #f0f0f0; }
+    .dash-tab {
+      flex:1; padding:12px 8px; text-align:center;
+      font-size:13px; font-weight:600; color:#888; cursor:pointer;
+      border:none; background:none; font-family:inherit;
+      border-bottom:3px solid transparent; margin-bottom:-2px; transition:all .2s;
+    }
+    .dash-tab.active { color:#800000; border-bottom-color:#800000; }
+
+    /* Form */
+    .dash-form { padding:18px; display:flex; flex-direction:column; gap:14px; }
+    .form-group { display:flex; flex-direction:column; gap:5px; }
+    .form-label { font-size:11px; font-weight:700; color:#800000; letter-spacing:.5px; text-transform:uppercase; }
+    .form-input, .form-select, .form-textarea {
+      width:100%; padding:10px 12px;
+      border:1.5px solid #e5e7eb; border-radius:8px;
+      font-family:inherit; font-size:14px; color:#111; background:#fafafa;
+      outline:none; transition:all .2s;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color:#800000; background:#fff; box-shadow:0 0 0 3px rgba(128,0,0,.08);
+    }
+    .form-textarea { resize:vertical; min-height:68px; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+    .campus-toggles { display:flex; gap:8px; flex-wrap:wrap; margin-top:2px; }
+    .campus-toggle {
+      padding:6px 13px; border-radius:18px; border:1.5px solid #e5e7eb;
+      font-size:13px; font-weight:600; color:#555; cursor:pointer;
+      background:#fff; font-family:inherit; transition:all .2s; user-select:none;
+    }
+    .campus-toggle.on { border-color:#800000; background:#fff5f5; color:#800000; }
+
+    .alert { padding:9px 13px; border-radius:7px; font-size:13px; display:none; }
+    .alert.show { display:block; }
+    .alert-error { background:#fef2f2; color:#dc2626; border-left:3px solid #dc2626; }
+    .alert-success { background:#f0fdf4; color:#166534; border-left:3px solid #16a34a; font-weight:600; text-align:center; }
+
+    .btn-submit {
+      width:100%; padding:13px; background:linear-gradient(90deg,#800000,#a00000);
+      color:#fff; border:none; border-radius:10px; font-size:15px;
+      font-weight:bold; cursor:pointer; font-family:inherit; letter-spacing:.5px;
+      transition:all .2s;
+    }
+    .btn-submit:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(128,0,0,.3); }
+    .btn-submit:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+
+    /* My Events list in dashboard */
+    .my-events-list { padding:14px; display:flex; flex-direction:column; gap:10px; }
+    .my-event-row {
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+      background:#fafafa; border:1.5px solid #e5e7eb; border-radius:8px; padding:10px 12px;
+    }
+    .my-event-info { flex:1; min-width:0; }
+    .my-event-title { font-weight:bold; font-size:14px; color:#111; }
+    .my-event-dates { font-size:11px; color:#888; margin-top:2px; }
+    .no-custom { padding:30px; text-align:center; color:#aaa; font-style:italic; font-size:14px; }
+
+    .footer-tip { text-align:center; margin-top:30px; color:#999; font-size:11px; letter-spacing:1px; }
+
+    /* ── ANIMATIONS ──────────────────────────────── */
+    @keyframes fadeUp   { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn   { from{opacity:0} to{opacity:1} }
+    @keyframes slideUp  { from{transform:translateY(100%);opacity:.5} to{transform:translateY(0);opacity:1} }
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <div class="header-pattern"></div>
-    <div class="tagline">Vibrance · Innovation · Impact</div>
-    <div class="title">Botho University</div>
-    <div class="subtitle">Academic Calendar 2026 – 2027</div>
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<div class="header">
+  <div class="header-pattern"></div>
+  <div class="tagline">Vibrance · Innovation · Impact</div>
+  <div class="uni-title">Botho University</div>
+  <div class="subtitle">Academic Calendar 2026 – 2027</div>
+  <div class="campus-filters" id="campusFilters">
+    <button class="filter-btn" data-campus="ALL">All Campuses</button>
+    <button class="filter-btn active" data-campus="ES">Eswatini</button>
+    <button class="filter-btn" data-campus="LS">Lesotho</button>
+    <button class="filter-btn" data-campus="BW">Botswana</button>
+    <button class="filter-btn" data-campus="BUO">BUOnline</button>
+  </div>
+  <div class="search-container">
+    <input type="text" id="eventSearch" class="search-input" placeholder="Search events…">
+  </div>
+</div>
 
-    <div class="campus-filters" id="campusFilters">
-      <button class="filter-btn" data-campus="ALL">All Campuses</button>
-      <button class="filter-btn active" data-campus="ES">Eswatini</button>
-      <button class="filter-btn" data-campus="LS">Lesotho</button>
-      <button class="filter-btn" data-campus="BW">Botswana</button>
-      <button class="filter-btn" data-campus="BUO">BUOnline</button>
-    </div>
+<!-- ═══════════════════ MAIN ════════════════════ -->
+<div class="container">
 
-    <div class="search-container">
-      <input type="text" id="eventSearch" class="search-input" placeholder="Search filtered campus events...">
+  <div class="month-nav">
+    <button class="nav-btn" id="prevMonthBtn">‹</button>
+    <div>
+      <div class="month-title" id="monthTitle"></div>
+      <div class="month-sub" id="monthSub"></div>
     </div>
+    <button class="nav-btn" id="nextMonthBtn">›</button>
   </div>
 
-  <div class="container">
-    
-    <div class="month-nav">
-      <button class="nav-btn" id="prevMonthBtn">‹</button>
-      <div>
-        <div class="month-title" id="monthTitle">July 2026</div>
-        <div class="month-sub" id="monthIndexSub">1 of 13</div>
-      </div>
-      <button class="nav-btn" id="nextMonthBtn">›</button>
+  <div class="calendar-grid">
+    <div class="dow-headers">
+      <div class="dow-cell">Sun</div><div class="dow-cell">Mon</div><div class="dow-cell">Tue</div>
+      <div class="dow-cell">Wed</div><div class="dow-cell">Thu</div><div class="dow-cell">Fri</div>
+      <div class="dow-cell">Sat</div>
     </div>
-
-    <div class="calendar-grid">
-      <div class="dow-headers">
-        <div class="dow-cell">Sun</div>
-        <div class="dow-cell">Mon</div>
-        <div class="dow-cell">Tue</div>
-        <div class="dow-cell">Wed</div>
-        <div class="dow-cell">Thu</div>
-        <div class="dow-cell">Fri</div>
-        <div class="dow-cell">Sat</div>
-      </div>
-      <div class="days-grid" id="daysGrid"></div>
-    </div>
-
-    <div class="legend" id="legend"></div>
-
-    <div id="selectedDayPanel" style="display: none;"></div>
-
-    <div class="section-heading" id="upcomingHeading">Upcoming This Month</div>
-    <div class="upcoming-panel">
-      <div class="panel-body" id="monthlyUpcomingList"></div>
-    </div>
-
-    <div class="footer-tip">TAP A DAY TO VIEW EVENTS · FILTER OR SEARCH ABOVE</div>
+    <div class="days-grid" id="daysGrid"></div>
   </div>
-  
-      <footer style="
+
+  <div class="legend" id="legend"></div>
+  <div id="selectedDayPanel" style="display:none;"></div>
+
+  <div class="section-heading">
+    <span id="upcomingHeading">Upcoming This Month</span>
+    <button class="btn-open-dashboard" onclick="openDashboard('add')">＋ Add Event</button>
+  </div>
+  <div class="upcoming-panel">
+    <div class="panel-body" id="monthlyUpcomingList"></div>
+  </div>
+
+  <div class="footer-tip">TAP A DAY TO VIEW EVENTS · FILTER OR SEARCH ABOVE</div>
+</div>
+
+<footer style="
     background: linear-gradient(90deg, #4a0000 0%, #2a0000 100%);
     border-top: 3px solid #d4a017;
     padding: 30px 16px;
@@ -529,457 +398,569 @@
     </div>
   </footer>
 
+<!-- ═══════════════════ FAB ════════════════════ -->
+<button class="fab" onclick="openDashboard('add')" title="Add Event">＋</button>
 
-  <script>
-    const EVENTS = [
-      { start: "2026-07-01", end: "2026-07-01", title: "Sir Seretse Khama Day", type: "holiday", campus: ["BW","BUO"], note: "Botswana & BUOnline campuses closed" },
-      { start: "2026-07-02", end: "2026-07-03", title: "ACL & Faculty Assessments – Supplementary", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-07-03", end: "2026-07-03", title: "BURCC Meeting", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-07-06", end: "2026-07-06", title: "Supplementary Results Published", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-07-08", end: "2026-07-13", title: "Late/Final Registration – Continuing Students", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-07-09", end: "2026-07-23", title: "Registration – First Year Students (Campus)", type: "academic", campus: ["LS","ES"] },
-      { start: "2026-07-13", end: "2026-07-13", title: "Semester Classes Begin – Continuing Students", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-07-14", end: "2026-07-14", title: "Internship Start Date", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-07-17", end: "2026-07-17", title: "King Letsile III's Birthday", type: "holiday", campus: ["LS"], note: "Lesotho campus closed" },
-      { start: "2026-07-20", end: "2026-07-21", title: "President's Day", type: "holiday", campus: ["BW","BUO"], note: "Botswana & BUOnline campuses closed" },
-      { start: "2026-07-22", end: "2026-07-22", title: "King Father's Birthday", type: "holiday", campus: ["ES"], note: "Eswatini campus closed" },
-      { start: "2026-07-22", end: "2026-07-22", title: "New Students & Parents Welcome Day", type: "academic", campus: ["BW","LS","ES"] },
-      { start: "2026-07-22", end: "2026-07-22", title: "Semester Classes Begin – Year 1 (2026 Sem 1)", type: "academic", campus: ["BW","LS","ES"] },
-      { start: "2026-07-23", end: "2026-07-30", title: "Registration for Graduation", type: "admin", campus: ["BW","BUO","LS"] },
-      { start: "2026-07-24", end: "2026-07-24", title: "Employability Fair", type: "event", campus: ["BW"] },
-      { start: "2026-07-24", end: "2026-07-24", title: "Institutional Review Board (IRB) Meeting", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-07-28", end: "2026-07-28", title: "SRC – Management Meeting", type: "admin", campus: ["LS"] },
-      { start: "2026-07-30", end: "2026-07-30", title: "SRC – Management Meeting", type: "admin", campus: ["ES"] },
-      { start: "2026-07-31", end: "2026-07-31", title: "Employability Fair", type: "event", campus: ["LS"] },
-      // AUGUST 2026
-      { start: "2026-08-13", end: "2026-08-13", title: "SRC – Management Meeting", type: "admin", campus: ["BW"] },
-      { start: "2026-08-14", end: "2026-08-14", title: "Interdepartmental Staff Committee Meeting", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-08-18", end: "2026-08-18", title: "Deans' Awards Ceremony", type: "event", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-08-19", end: "2026-08-19", title: "CGP Annual Awards & SAAD Open Day", type: "event", campus: ["BW"] },
-      { start: "2026-08-19", end: "2026-08-19", title: "IDSC Meeting", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-08-20", end: "2026-08-20", title: "SAAD Open Day", type: "event", campus: ["ES"] },
-      { start: "2026-08-21", end: "2026-08-21", title: "CGP Annual Awards & SAAD Open Day", type: "event", campus: ["LS"] },
-      { start: "2026-08-24", end: "2026-08-28", title: "Staff-Student Consultative Committee Meetings", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-08-28", end: "2026-08-28", title: "Hackathon", type: "event", campus: ["BW"] },
-      // SEPTEMBER 2026
-      { start: "2026-09-02", end: "2026-09-02", title: "Umhlanga", type: "holiday", campus: ["ES"], note: "Eswatini campus closed" },
-      { start: "2026-09-04", end: "2026-09-04", title: "Destination Success Bootcamp", type: "event", campus: ["LS"] },
-      { start: "2026-09-07", end: "2026-09-07", title: "Somhlolo Day", type: "holiday", campus: ["ES"], note: "Eswatini campus closed" },
-      { start: "2026-09-07", end: "2026-09-18", title: "Student Feedback Collection", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-09-09", end: "2026-09-09", title: "BGP Internship Orientation", type: "academic", campus: ["BW"] },
-      { start: "2026-09-16", end: "2026-09-16", title: "BGP Internship Orientation", type: "academic", campus: ["ES"] },
-      { start: "2026-09-18", end: "2026-09-18", title: "BGP Internship Orientation", type: "academic", campus: ["LS"] },
-      { start: "2026-09-22", end: "2026-09-22", title: "Board of Directors Meeting", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-09-25", end: "2026-09-25", title: "Graduation Ceremony – Lesotho Campus", type: "event", campus: ["LS"] },
-      { start: "2026-09-30", end: "2026-10-01", title: "Independence Day & Botswana Day", type: "holiday", campus: ["BW","BUO"], note: "Botswana & BUOnline campuses closed" },
-      // OCTOBER 2026
-      { start: "2026-10-04", end: "2026-10-04", title: "Lesotho Independence Day", type: "holiday", campus: ["LS"], note: "Lesotho campus closed" },
-      { start: "2026-10-05", end: "2026-10-08", title: "Faculty Programmes Committee Meetings", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-10-08", end: "2026-10-08", title: "SRC – Management Meeting", type: "admin", campus: ["BW"] },
-      { start: "2026-10-13", end: "2026-10-13", title: "SRC – Management Meeting", type: "admin", campus: ["LS"] },
-      { start: "2026-10-13", end: "2026-10-13", title: "Semester Classes Begin – BUOnline Oct Semester", type: "academic", campus: ["BUO"] },
-      { start: "2026-10-15", end: "2026-10-15", title: "SRC – Management Meeting", type: "admin", campus: ["ES"] },
-      { start: "2026-10-22", end: "2026-10-23", title: "Destination Success BootCamp", type: "event", campus: ["BW"] },
-      { start: "2026-10-23", end: "2026-10-23", title: "SRC Elections", type: "event", campus: ["ES"] },
-      { start: "2026-10-23", end: "2026-10-23", title: "Graduation Ceremony – Botswana & BUO", type: "event", campus: ["BW","BUO"] },
-      { start: "2026-10-27", end: "2026-10-27", title: "Advisory Council Meeting", type: "admin", campus: ["LS"] },
-      { start: "2026-10-28", end: "2026-11-03", title: "Revision Week", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      // NOVEMBER 2026
-      { start: "2026-11-02", end: "2026-11-02", title: "SRC Elections", type: "event", campus: ["LS"] },
-      { start: "2026-11-03", end: "2026-11-03", title: "Advisory Council Meeting", type: "admin", campus: ["BW","BUO","ES"] },
-      { start: "2026-11-04", end: "2026-11-13", title: "End Assessment Week", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-11-13", end: "2026-11-13", title: "Internship Portfolio Submission", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-11-18", end: "2026-11-18", title: "IDSC Meeting", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-11-24", end: "2026-11-24", title: "Board of Directors Meeting", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      // DECEMBER 2026
-      { start: "2026-11-30", end: "2026-12-01", title: "Faculty Assessments Committee Meetings", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-12-01", end: "2026-12-01", title: "Academic Committee Lesotho (ACL) Meeting", type: "admin", campus: ["LS"] },
-      { start: "2026-12-02", end: "2026-12-02", title: "Academic Board Meeting", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-12-04", end: "2026-12-04", title: "Results Published", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-12-07", end: "2026-12-21", title: "Continuing Students Registration", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-12-09", end: "2026-12-09", title: "Management Review Committee Meeting", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-12-17", end: "2026-12-21", title: "Supplementary Assessment Week", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2026-12-24", end: "2027-01-03", title: "Christmas & New Year Break", type: "holiday", campus: ["BW","BUO","LS","ES"], note: "All campuses closed" },
-      // JANUARY 2027
-      { start: "2027-01-11", end: "2027-01-12", title: "ACL & Faculty Assessments Committee (Supplementary)", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-01-13", end: "2027-01-13", title: "Supplementary Results Published", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-01-13", end: "2027-01-18", title: "Late/Final Registration – Continuing Students", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-01-14", end: "2027-01-14", title: "Semester Classes Begin – All Campuses", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-01-14", end: "2027-01-14", title: "Internship Start Date", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-01-15", end: "2027-01-15", title: "IRB Meeting", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      // FEBRUARY 2027
-      { start: "2027-02-10", end: "2027-02-10", title: "Deans' Awards Ceremonies", type: "event", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-02-18", end: "2027-02-18", title: "Interdepartmental Staff Committee Meeting", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-02-22", end: "2027-02-26", title: "Staff-Student Consultative Committee Meetings", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      // MARCH 2027
-      { start: "2027-03-11", end: "2027-03-11", title: "King Moshoeshoe I's Anniversary", type: "holiday", campus: ["LS"], note: "Lesotho campus closed" },
-      { start: "2027-03-08", end: "2027-03-19", title: "Student Feedback Collection", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-03-19", end: "2027-03-19", title: "FET Project Expo", type: "event", campus: ["BW"] },
-      { start: "2027-03-26", end: "2027-03-29", title: "Easter Break", type: "holiday", campus: ["BW","BUO","LS","ES"], note: "All campuses closed" },
-      // APRIL 2027
-      { start: "2027-04-01", end: "2027-04-01", title: "Graduate Tracer Study Launch", type: "event", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-04-07", end: "2027-04-07", title: "BURCC Meeting", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-04-12", end: "2027-04-12", title: "Semester Classes Begin – BUOnline Apr Semester", type: "academic", campus: ["BUO"] },
-      { start: "2027-04-12", end: "2027-04-14", title: "Faculty Programmes Committee Meetings", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-04-19", end: "2027-04-19", title: "King's Birthday", type: "holiday", campus: ["ES"], note: "Eswatini campus closed" },
-      { start: "2027-04-25", end: "2027-04-25", title: "National Flag Day", type: "holiday", campus: ["ES"], note: "Eswatini campus closed" },
-      { start: "2027-04-28", end: "2027-05-04", title: "Revision Week", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      // MAY 2027
-      { start: "2027-05-01", end: "2027-05-01", title: "Labour Day / International Workers' Day", type: "holiday", campus: ["BW","BUO","LS","ES"], note: "All campuses closed" },
-      { start: "2027-05-05", end: "2027-05-14", title: "End Assessment Week", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-05-06", end: "2027-05-06", title: "Ascension Day", type: "holiday", campus: ["BW","BUO","LS","ES"], note: "All campuses closed" },
-      { start: "2027-05-14", end: "2027-05-14", title: "Internship Portfolio Submission", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-05-21", end: "2027-05-21", title: "Interdepartmental Staff Committee Meeting", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-05-25", end: "2027-05-25", title: "Africa Day & Heroes Day", type: "holiday", campus: ["LS"], note: "Lesotho campus closed" },
-      // JUNE 2027
-      { start: "2027-06-03", end: "2027-06-04", title: "Faculty Assessments Committee Meetings", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-06-04", end: "2027-06-04", title: "Academic Committee Lesotho (ACL) Meeting", type: "admin", campus: ["LS"] },
-      { start: "2027-06-08", end: "2027-06-08", title: "Academic Board Meeting", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-06-10", end: "2027-06-10", title: "Results Published", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-06-18", end: "2027-06-18", title: "Management Review Committee Meeting", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-06-21", end: "2027-06-25", title: "Supplementary Assessment Week", type: "academic", campus: ["BW","BUO","LS","ES"] },
-      // JULY 2027
-      { start: "2027-07-01", end: "2027-07-01", title: "Sir Seretse Khama Day", type: "holiday", campus: ["BW","BUO"], note: "Botswana & BUOnline campuses closed" },
-      { start: "2027-07-02", end: "2027-07-05", title: "ACL & Faculty Assessments Committee – Supplementary", type: "admin", campus: ["BW","BUO","LS","ES"] },
-      { start: "2027-07-09", end: "2027-07-09", title: "Supplementary Results Published", type: "academic", campus: ["BW","BUO","LS","ES"] },
-    ];
+<!-- ═══════════════════ DASHBOARD OVERLAY ═══════ -->
+<div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
+  <div class="dashboard" id="dashboard">
+    <div class="dash-handle"></div>
 
-    const TYPE_CONFIG = {
-      holiday:  { label: "Public Holiday",  color: "#dc2626", dot: "#dc2626" },
-      academic: { label: "Academic",        color: "#2563eb", dot: "#2563eb" },
-      admin:    { label: "Administration",  color: "#7c3aed", dot: "#7c3aed" },
-      event:    { label: "Event",           color: "#059669", dot: "#059669" },
-    };
+    <div class="dash-header">
+      <div>
+        <div class="dash-header-title">📋 Event Dashboard</div>
+        <div class="dash-header-sub">Add custom events · Manage your saved events</div>
+      </div>
+      <button class="dash-close" onclick="closeDashboard()">×</button>
+    </div>
 
-    const MONTHS = [
-      "July 2026","August 2026","September 2026","October 2026",
-      "November 2026","December 2026","January 2027","February 2027",
-      "March 2027","April 2027","May 2027","June 2027","July 2027"
-    ];
+    <div class="dash-tabs">
+      <button class="dash-tab active" id="tabAdd" onclick="switchTab('add')">＋ Add New Event</button>
+      <button class="dash-tab" id="tabMine" onclick="switchTab('mine')">📁 My Events</button>
+    </div>
 
-    const MONTH_KEYS = [
-      "2026-07","2026-08","2026-09","2026-10",
-      "2026-11","2026-12","2027-01","2027-02",
-      "2027-03","2027-04","2027-05","2027-06","2027-07"
-    ];
+    <!-- ADD TAB -->
+    <div id="panelAdd">
+      <div class="dash-form">
+        <div class="alert alert-error" id="formError"></div>
+        <div class="alert alert-success" id="formSuccess">✓ Event saved! Calendar updated.</div>
 
-    // State Management (Defaults to ES as requested)
-    let currentMonthIdx = 0;
-    let currentSelectedDay = null;
-    let currentCampusFilter = "ES";
-    let eventMap = {};
-    let searchActive = false;
+        <div class="form-group">
+          <label class="form-label">Event Title *</label>
+          <input type="text" id="newTitle" class="form-input" placeholder="e.g. Module Test – Database Concepts">
+        </div>
 
-    function parseDate(str) {
-      const [y, m, d] = str.split("-").map(Number);
-      return new Date(y, m - 1, d);
-    }
-
-    function toDateKey(date) {
-      return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`;
-    }
-
-    function getDaysInMonth(year, month) {
-      return new Date(year, month + 1, 0).getDate();
-    }
-
-    function buildEventMap() {
-      eventMap = {};
-      EVENTS.forEach(ev => {
-        const start = parseDate(ev.start);
-        const end = parseDate(ev.end);
-        for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-          const key = toDateKey(d);
-          if (!eventMap[key]) eventMap[key] = [];
-          eventMap[key].push(ev);
-        }
-      });
-    }
-
-    // Export Utilities
-    function downloadICS(title, start, end, campus, note) {
-      const fmt = (str) => str.replace(/-/g, "");
-      const lines = [
-        "BEGIN:VCALENDAR",
-        "VERSION:2.0",
-        "PRODID:-//Botho University//Academic Calendar//EN",
-        "BEGIN:VEVENT",
-        `DTSTART;VALUE=DATE:${fmt(start)}`,
-        `DTEND;VALUE=DATE:${fmt(end)}`,
-        `SUMMARY:${title}`,
-        `DESCRIPTION:Campus: ${campus.join(", ")}${note ? " | " + note : ""}`,
-        "END:VEVENT",
-        "END:VCALENDAR"
-      ];
-      const content = lines.join("\r\n");
-      const blob = new Blob([content], { type: "text/calendar;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${title.replace(/[^a-z0-9]/gi,"_")}.ics`;
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function getGoogleCalLink(title, start, end, campus, note) {
-      const fmt = (s) => s.replace(/-/g,"");
-      const base = "https://calendar.google.com/calendar/render?action=TEMPLATE";
-      const text = encodeURIComponent(title);
-      const dates = `${fmt(start)}/${fmt(end)}`;
-      const details = encodeURIComponent(`Campus: ${campus.join(", ")}${note ? " | " + note : ""}`);
-      return `${base}&text=${text}&dates=${dates}&details=${details}`;
-    }
-
-    // Markup Generator
-    function createEventCardMarkup(ev) {
-      const cfg = TYPE_CONFIG[ev.type];
-      const campusBadges = ev.campus.map(c => `<span class="badge-campus">${c}</span>`).join("");
-      const alertNote = ev.note ? `<div class="event-note">⚠ ${ev.note}</div>` : "";
-      const dateRange = ev.start !== ev.end ? `<div class="event-duration">${ev.start} → ${ev.end}</div>` : "";
-
-      const safeTitle = ev.title.replace(/'/g, "\\'");
-      const safeNote = ev.note ? ev.note.replace(/'/g, "\\'") : "";
-      const campusArrStr = JSON.stringify(ev.campus);
-
-      return `
-        <div class="event-card" style="border-left: 4px solid ${cfg.dot};">
-          <div class="event-title">${ev.title}</div>
-          <div class="event-meta">
-            <span class="badge-type" style="background: ${cfg.dot}15; color: ${cfg.dot};">${cfg.label}</span>
-            ${campusBadges}
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Start Date *</label>
+            <input type="date" id="newStart" class="form-input">
           </div>
-          ${alertNote}
-          ${dateRange}
-          <div class="btn-group">
-            <button class="btn-cal" onclick="downloadICS('${safeTitle}', '${ev.start}', '${ev.end}', ${campusArrStr}, '${safeNote}')">📅 Add to Calendar</button>
-            <a class="btn-gcal" href="${getGoogleCalLink(ev.title, ev.start, ev.end, ev.campus, ev.note)}" target="_blank" rel="noreferrer">🌐 Google Cal</a>
+          <div class="form-group">
+            <label class="form-label">End Date *</label>
+            <input type="date" id="newEnd" class="form-input">
           </div>
         </div>
-      `;
-    }
 
-    // Core Calendar Render Logic
-    function renderCalendar() {
-      if (searchActive) return; 
+        <div class="form-group">
+          <label class="form-label">Event Type *</label>
+          <select id="newType" class="form-select">
+            <option value="">— Select type —</option>
+            <option value="academic">📘 Academic</option>
+            <option value="event">🎉 Event / Activity</option>
+            <option value="holiday">🏖 Public Holiday</option>
+            <option value="admin">🗂 Administration</option>
+          </select>
+        </div>
 
-      const monthKey = MONTH_KEYS[currentMonthIdx];
-      document.getElementById("monthTitle").innerText = MONTHS[currentMonthIdx];
-      document.getElementById("monthIndexSub").innerText = `${currentMonthIdx + 1} of ${MONTHS.length}`;
-
-      const [year, month] = monthKey.split("-").map(Number);
-      const daysInMonth = getDaysInMonth(year, month - 1);
-      const firstDow = new Date(year, month - 1, 1).getDay();
-
-      const daysGrid = document.getElementById("daysGrid");
-      daysGrid.innerHTML = "";
-
-      // Empty prefixes for the correct grid start day
-      for (let i = 0; i < firstDow; i++) {
-        daysGrid.appendChild(document.createElement("div"));
-      }
-
-      // Loop over month days
-      for (let day = 1; day <= daysInMonth; day++) {
-        const dayKey = `${monthKey}-${String(day).padStart(2, "0")}`;
-        const rawDayEvents = eventMap[dayKey] || [];
-        
-        // Filter strictly by selected campus constraint
-        const dayEvents = rawDayEvents.filter(e => currentCampusFilter === "ALL" || e.campus.includes(currentCampusFilter));
-
-        const isSelected = currentSelectedDay === day;
-        const isToday = toDateKey(new Date()) === dayKey;
-        const uniqueTypes = [...new Set(dayEvents.map(e => e.type))];
-
-        const cell = document.createElement("div");
-        cell.className = `day-cell ${dayEvents.length > 0 ? "has-events" : ""} ${isSelected ? "selected" : ""} ${isToday ? "today" : ""}`;
-        cell.innerHTML = `<span class="day-num">${day}</span>`;
-
-        if (dayEvents.length > 0) {
-          const dotsContainer = document.createElement("div");
-          dotsContainer.className = "dots-container";
-          uniqueTypes.forEach(t => {
-            const dot = document.createElement("div");
-            dot.className = "dot";
-            dot.style.background = TYPE_CONFIG[t].dot;
-            dotsContainer.appendChild(dot);
-          });
-          cell.appendChild(dotsContainer);
-          cell.onclick = () => handleDaySelection(day);
-        }
-        daysGrid.appendChild(cell);
-      }
-
-      // Aggregate and append only matching filtered events below calendar
-      const uniqueMonthlyEvents = [];
-      const seenTitles = new Set();
-
-      for (let day = 1; day <= daysInMonth; day++) {
-        const dayKey = `${monthKey}-${String(day).padStart(2, "0")}`;
-        const dayEvents = (eventMap[dayKey] || []).filter(e => currentCampusFilter === "ALL" || e.campus.includes(currentCampusFilter));
-        
-        dayEvents.forEach(ev => {
-          if (!seenTitles.has(ev.title)) {
-            seenTitles.add(ev.title);
-            uniqueMonthlyEvents.push(ev);
-          }
-        });
-      }
-
-      document.getElementById("upcomingHeading").innerText = `Upcoming in ${MONTHS[currentMonthIdx].split(" ")[0]}`;
-      const upcomingListContainer = document.getElementById("monthlyUpcomingList");
-      
-      if (uniqueMonthlyEvents.length === 0) {
-        upcomingListContainer.innerHTML = `<div class="no-events">No scheduled items found matching your filter criteria.</div>`;
-      } else {
-        let monthlyUpcomingHTML = "";
-        uniqueMonthlyEvents.forEach(ev => {
-          monthlyUpcomingHTML += createEventCardMarkup(ev);
-        });
-        upcomingListContainer.innerHTML = monthlyUpcomingHTML;
-      }
-
-      renderSelectedDayPanel();
-    }
-
-    function handleDaySelection(day) {
-      currentSelectedDay = (currentSelectedDay === day) ? null : day;
-      renderCalendar();
-    }
-
-    function renderSelectedDayPanel() {
-      const panel = document.getElementById("selectedDayPanel");
-      if (!currentSelectedDay || searchActive) {
-        panel.style.display = "none";
-        return;
-      }
-
-      const monthKey = MONTH_KEYS[currentMonthIdx];
-      const dayKey = `${monthKey}-${String(currentSelectedDay).padStart(2, "0")}`;
-      const dayEvents = (eventMap[dayKey] || []).filter(e => currentCampusFilter === "ALL" || e.campus.includes(currentCampusFilter));
-      const [year, month] = monthKey.split("-").map(Number);
-
-      let cardsHTML = "";
-      dayEvents.forEach(ev => {
-        cardsHTML += createEventCardMarkup(ev);
-      });
-
-      panel.innerHTML = `
-        <div class="event-panel">
-          <div class="panel-header">
-            <div>
-              <div style="font-size: 16px; font-weight: bold; color: #800000;">${MONTHS[currentMonthIdx].split(" ")[0]} ${currentSelectedDay}, ${year}</div>
-              <div style="font-size: 12px; color: #444444; margin-top: 2px;">${dayEvents.length} Event${dayEvents.length !== 1 ? 's' : ''} Listed</div>
-            </div>
-            <button class="close-btn" onclick="closeDayPanel()">×</button>
-          </div>
-          <div class="panel-body">
-            ${dayEvents.length === 0 ? `<div class="no-events">No specific events map to this date range with your filters.</div>` : cardsHTML}
+        <div class="form-group">
+          <label class="form-label">Campus *</label>
+          <div class="campus-toggles" id="campusToggles">
+            <button class="campus-toggle" data-c="ES">Eswatini</button>
+            <button class="campus-toggle" data-c="LS">Lesotho</button>
+            <button class="campus-toggle" data-c="BW">Botswana</button>
+            <button class="campus-toggle" data-c="BUO">BUOnline</button>
           </div>
         </div>
-      `;
-      panel.style.display = "block";
+
+        <div class="form-group">
+          <label class="form-label">Note <span style="font-weight:400;color:#aaa;">(optional)</span></label>
+          <textarea id="newNote" class="form-textarea" placeholder="e.g. Venue: Auditorium B. Bring student ID."></textarea>
+        </div>
+
+        <button class="btn-submit" id="submitBtn" onclick="submitEvent()">📅 Save Event to Calendar</button>
+      </div>
+    </div>
+
+    <!-- MY EVENTS TAB -->
+    <div id="panelMine" style="display:none;">
+      <div class="my-events-list" id="myEventsList"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════ SCRIPT ══════════════════ -->
+<script>
+/* ─── BUILT-IN EVENTS ─────────────────────────── */
+const BUILTIN = [
+  // JULY 2026
+  {start:"2026-07-01",end:"2026-07-01",title:"Sir Seretse Khama Day",type:"holiday",campus:["BW","BUO"],note:"Botswana & BUOnline campuses closed"},
+  {start:"2026-07-02",end:"2026-07-03",title:"ACL & Faculty Assessments – Supplementary",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-07-03",end:"2026-07-03",title:"BURCC Meeting",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-07-06",end:"2026-07-06",title:"Supplementary Results Published",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-07-08",end:"2026-07-13",title:"Late/Final Registration – Continuing Students",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-07-09",end:"2026-07-23",title:"Registration – First Year Students (Campus)",type:"academic",campus:["LS","ES"]},
+  {start:"2026-07-13",end:"2026-07-13",title:"Semester Classes Begin – Continuing Students",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-07-14",end:"2026-07-14",title:"Internship Start Date",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-07-17",end:"2026-07-17",title:"King Letsile III's Birthday",type:"holiday",campus:["LS"],note:"Lesotho campus closed"},
+  {start:"2026-07-20",end:"2026-07-21",title:"President's Day",type:"holiday",campus:["BW","BUO"],note:"Botswana & BUOnline campuses closed"},
+  {start:"2026-07-22",end:"2026-07-22",title:"King Father's Birthday",type:"holiday",campus:["ES"],note:"Eswatini campus closed"},
+  {start:"2026-07-22",end:"2026-07-22",title:"New Students & Parents Welcome Day",type:"academic",campus:["BW","LS","ES"]},
+  {start:"2026-07-22",end:"2026-07-22",title:"Semester Classes Begin – Year 1 (2026 Sem 1)",type:"academic",campus:["BW","LS","ES"]},
+  {start:"2026-07-23",end:"2026-07-30",title:"Registration for Graduation",type:"admin",campus:["BW","BUO","LS"]},
+  {start:"2026-07-24",end:"2026-07-24",title:"Employability Fair",type:"event",campus:["BW"]},
+  {start:"2026-07-24",end:"2026-07-24",title:"Institutional Review Board (IRB) Meeting",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-07-28",end:"2026-07-28",title:"SRC – Management Meeting",type:"admin",campus:["LS"]},
+  {start:"2026-07-30",end:"2026-07-30",title:"SRC – Management Meeting",type:"admin",campus:["ES"]},
+  {start:"2026-07-31",end:"2026-07-31",title:"Employability Fair",type:"event",campus:["LS"]},
+  // AUGUST 2026
+  {start:"2026-08-13",end:"2026-08-13",title:"SRC – Management Meeting",type:"admin",campus:["BW"]},
+  {start:"2026-08-14",end:"2026-08-14",title:"Interdepartmental Staff Committee Meeting",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-08-18",end:"2026-08-18",title:"Deans' Awards Ceremony",type:"event",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-08-19",end:"2026-08-19",title:"CGP Annual Awards & SAAD Open Day",type:"event",campus:["BW"]},
+  {start:"2026-08-19",end:"2026-08-19",title:"IDSC Meeting",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-08-20",end:"2026-08-20",title:"SAAD Open Day",type:"event",campus:["ES"]},
+  {start:"2026-08-21",end:"2026-08-21",title:"CGP Annual Awards & SAAD Open Day",type:"event",campus:["LS"]},
+  {start:"2026-08-24",end:"2026-08-28",title:"Staff-Student Consultative Committee Meetings",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-08-28",end:"2026-08-28",title:"Hackathon",type:"event",campus:["BW"]},
+  // SEPTEMBER 2026
+  {start:"2026-09-02",end:"2026-09-02",title:"Umhlanga",type:"holiday",campus:["ES"],note:"Eswatini campus closed"},
+  {start:"2026-09-04",end:"2026-09-04",title:"Destination Success Bootcamp",type:"event",campus:["LS"]},
+  {start:"2026-09-07",end:"2026-09-07",title:"Somhlolo Day",type:"holiday",campus:["ES"],note:"Eswatini campus closed"},
+  {start:"2026-09-07",end:"2026-09-18",title:"Student Feedback Collection",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-09-09",end:"2026-09-09",title:"BGP Internship Orientation",type:"academic",campus:["BW"]},
+  {start:"2026-09-16",end:"2026-09-16",title:"BGP Internship Orientation",type:"academic",campus:["ES"]},
+  {start:"2026-09-18",end:"2026-09-18",title:"BGP Internship Orientation",type:"academic",campus:["LS"]},
+  {start:"2026-09-22",end:"2026-09-22",title:"Board of Directors Meeting",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-09-25",end:"2026-09-25",title:"Graduation Ceremony – Lesotho Campus",type:"event",campus:["LS"]},
+  {start:"2026-09-30",end:"2026-10-01",title:"Independence Day & Botswana Day",type:"holiday",campus:["BW","BUO"],note:"Botswana & BUOnline campuses closed"},
+  // OCTOBER 2026
+  {start:"2026-10-04",end:"2026-10-04",title:"Lesotho Independence Day",type:"holiday",campus:["LS"],note:"Lesotho campus closed"},
+  {start:"2026-10-05",end:"2026-10-08",title:"Faculty Programmes Committee Meetings",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-10-08",end:"2026-10-08",title:"SRC – Management Meeting",type:"admin",campus:["BW"]},
+  {start:"2026-10-13",end:"2026-10-13",title:"SRC – Management Meeting",type:"admin",campus:["LS"]},
+  {start:"2026-10-13",end:"2026-10-13",title:"Semester Classes Begin – BUOnline Oct Semester",type:"academic",campus:["BUO"]},
+  {start:"2026-10-15",end:"2026-10-15",title:"SRC – Management Meeting",type:"admin",campus:["ES"]},
+  {start:"2026-10-22",end:"2026-10-23",title:"Destination Success BootCamp",type:"event",campus:["BW"]},
+  {start:"2026-10-23",end:"2026-10-23",title:"SRC Elections",type:"event",campus:["ES"]},
+  {start:"2026-10-23",end:"2026-10-23",title:"Graduation Ceremony – Botswana & BUO",type:"event",campus:["BW","BUO"]},
+  {start:"2026-10-27",end:"2026-10-27",title:"Advisory Council Meeting",type:"admin",campus:["LS"]},
+  {start:"2026-10-28",end:"2026-11-03",title:"Revision Week",type:"academic",campus:["BW","BUO","LS","ES"]},
+  // NOVEMBER 2026
+  {start:"2026-11-02",end:"2026-11-02",title:"SRC Elections",type:"event",campus:["LS"]},
+  {start:"2026-11-03",end:"2026-11-03",title:"Advisory Council Meeting",type:"admin",campus:["BW","BUO","ES"]},
+  {start:"2026-11-04",end:"2026-11-13",title:"End Assessment Week",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-11-13",end:"2026-11-13",title:"Internship Portfolio Submission",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-11-18",end:"2026-11-18",title:"IDSC Meeting",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-11-24",end:"2026-11-24",title:"Board of Directors Meeting",type:"admin",campus:["BW","BUO","LS","ES"]},
+  // DECEMBER 2026
+  {start:"2026-11-30",end:"2026-12-01",title:"Faculty Assessments Committee Meetings",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-12-01",end:"2026-12-01",title:"Academic Committee Lesotho (ACL) Meeting",type:"admin",campus:["LS"]},
+  {start:"2026-12-02",end:"2026-12-02",title:"Academic Board Meeting",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-12-04",end:"2026-12-04",title:"Results Published",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-12-07",end:"2026-12-21",title:"Continuing Students Registration",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-12-09",end:"2026-12-09",title:"Management Review Committee Meeting",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-12-17",end:"2026-12-21",title:"Supplementary Assessment Week",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2026-12-24",end:"2027-01-03",title:"Christmas & New Year Break",type:"holiday",campus:["BW","BUO","LS","ES"],note:"All campuses closed"},
+  // JANUARY 2027
+  {start:"2027-01-11",end:"2027-01-12",title:"ACL & Faculty Assessments Committee (Supplementary)",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-01-13",end:"2027-01-13",title:"Supplementary Results Published",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-01-13",end:"2027-01-18",title:"Late/Final Registration – Continuing Students",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-01-14",end:"2027-01-14",title:"Semester Classes Begin – All Campuses",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-01-14",end:"2027-01-14",title:"Internship Start Date",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-01-15",end:"2027-01-15",title:"IRB Meeting",type:"admin",campus:["BW","BUO","LS","ES"]},
+  // FEBRUARY 2027
+  {start:"2027-02-10",end:"2027-02-10",title:"Deans' Awards Ceremonies",type:"event",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-02-18",end:"2027-02-18",title:"Interdepartmental Staff Committee Meeting",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-02-22",end:"2027-02-26",title:"Staff-Student Consultative Committee Meetings",type:"admin",campus:["BW","BUO","LS","ES"]},
+  // MARCH 2027
+  {start:"2027-03-08",end:"2027-03-19",title:"Student Feedback Collection",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-03-11",end:"2027-03-11",title:"King Moshoeshoe I's Anniversary",type:"holiday",campus:["LS"],note:"Lesotho campus closed"},
+  {start:"2027-03-19",end:"2027-03-19",title:"FET Project Expo",type:"event",campus:["BW"]},
+  {start:"2027-03-26",end:"2027-03-29",title:"Easter Break",type:"holiday",campus:["BW","BUO","LS","ES"],note:"All campuses closed"},
+  // APRIL 2027
+  {start:"2027-04-01",end:"2027-04-01",title:"Graduate Tracer Study Launch",type:"event",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-04-07",end:"2027-04-07",title:"BURCC Meeting",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-04-12",end:"2027-04-12",title:"Semester Classes Begin – BUOnline Apr Semester",type:"academic",campus:["BUO"]},
+  {start:"2027-04-12",end:"2027-04-14",title:"Faculty Programmes Committee Meetings",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-04-19",end:"2027-04-19",title:"King's Birthday",type:"holiday",campus:["ES"],note:"Eswatini campus closed"},
+  {start:"2027-04-25",end:"2027-04-25",title:"National Flag Day",type:"holiday",campus:["ES"],note:"Eswatini campus closed"},
+  {start:"2027-04-28",end:"2027-05-04",title:"Revision Week",type:"academic",campus:["BW","BUO","LS","ES"]},
+  // MAY 2027
+  {start:"2027-05-01",end:"2027-05-01",title:"Labour Day / International Workers' Day",type:"holiday",campus:["BW","BUO","LS","ES"],note:"All campuses closed"},
+  {start:"2027-05-05",end:"2027-05-14",title:"End Assessment Week",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-05-06",end:"2027-05-06",title:"Ascension Day",type:"holiday",campus:["BW","BUO","LS","ES"],note:"All campuses closed"},
+  {start:"2027-05-14",end:"2027-05-14",title:"Internship Portfolio Submission",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-05-21",end:"2027-05-21",title:"Interdepartmental Staff Committee Meeting",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-05-25",end:"2027-05-25",title:"Africa Day & Heroes Day",type:"holiday",campus:["LS"],note:"Lesotho campus closed"},
+  // JUNE 2027
+  {start:"2027-06-03",end:"2027-06-04",title:"Faculty Assessments Committee Meetings",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-06-04",end:"2027-06-04",title:"Academic Committee Lesotho (ACL) Meeting",type:"admin",campus:["LS"]},
+  {start:"2027-06-08",end:"2027-06-08",title:"Academic Board Meeting",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-06-10",end:"2027-06-10",title:"Results Published",type:"academic",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-06-18",end:"2027-06-18",title:"Management Review Committee Meeting",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-06-21",end:"2027-06-25",title:"Supplementary Assessment Week",type:"academic",campus:["BW","BUO","LS","ES"]},
+  // JULY 2027
+  {start:"2027-07-01",end:"2027-07-01",title:"Sir Seretse Khama Day",type:"holiday",campus:["BW","BUO"],note:"Botswana & BUOnline campuses closed"},
+  {start:"2027-07-02",end:"2027-07-05",title:"ACL & Faculty Assessments Committee – Supplementary",type:"admin",campus:["BW","BUO","LS","ES"]},
+  {start:"2027-07-09",end:"2027-07-09",title:"Supplementary Results Published",type:"academic",campus:["BW","BUO","LS","ES"]},
+];
+
+const TYPE_CFG = {
+  holiday: {label:"Public Holiday", dot:"#dc2626"},
+  academic:{label:"Academic",       dot:"#2563eb"},
+  admin:   {label:"Administration", dot:"#7c3aed"},
+  event:   {label:"Event",          dot:"#059669"},
+};
+
+const MONTHS     = ["July 2026","August 2026","September 2026","October 2026","November 2026","December 2026","January 2027","February 2027","March 2027","April 2027","May 2027","June 2027","July 2027"];
+const MONTH_KEYS = ["2026-07","2026-08","2026-09","2026-10","2026-11","2026-12","2027-01","2027-02","2027-03","2027-04","2027-05","2027-06","2027-07"];
+const DOW  = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const MONS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+/* ─── STATE ───────────────────────────────────── */
+let monthIdx   = 0;
+let selDay     = null;
+let campusFilter = "ES";
+let searchActive = false;
+let eventMap   = {};
+let ALL_EVENTS = [];   // BUILTIN + custom merged
+
+/* ─── CUSTOM EVENT STORAGE ────────────────────── */
+function loadCustom()  { try { return JSON.parse(localStorage.getItem("bu_custom")||"[]"); } catch { return []; } }
+function saveCustom(a) { localStorage.setItem("bu_custom", JSON.stringify(a)); }
+
+function rebuild() {
+  ALL_EVENTS = [...BUILTIN, ...loadCustom()];
+  eventMap = {};
+  ALL_EVENTS.forEach(ev => {
+    let d = pDate(ev.start), end = pDate(ev.end);
+    for (; d <= end; d.setDate(d.getDate()+1)) {
+      const k = toKey(d);
+      if (!eventMap[k]) eventMap[k] = [];
+      // Prevent duplicate entries if event already on that day
+      if (!eventMap[k].find(e => e.title===ev.title && e.start===ev.start))
+        eventMap[k].push(ev);
     }
+  });
+}
 
-    function closeDayPanel() {
-      currentSelectedDay = null;
-      renderCalendar();
-    }
+/* ─── DATE HELPERS ────────────────────────────── */
+function pDate(s)    { const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d); }
+function toKey(d)    { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
+function todayKey()  { return toKey(new Date()); }
+function daysIn(y,m) { return new Date(y,m+1,0).getDate(); }
 
-    // Global Search Pipeline (Bound tightly to the chosen Campus filter context)
-    function handleGlobalSearch(query) {
-      const target = query.trim().toLowerCase();
-      const upcomingHeading = document.getElementById("upcomingHeading");
-      const upcomingListContainer = document.getElementById("monthlyUpcomingList");
-      const panel = document.getElementById("selectedDayPanel");
+function fmtChip(dateStr) {
+  const d = pDate(dateStr);
+  return `${DOW[d.getDay()]} ${d.getDate()} ${MONS[d.getMonth()]}`;
+}
+function fmtShort(dateStr) {
+  const d = pDate(dateStr);
+  return `${d.getDate()} ${MONS[d.getMonth()]} ${d.getFullYear()}`;
+}
 
-      if (target === "") {
-        searchActive = false;
-        document.getElementById("prevMonthBtn").disabled = currentMonthIdx === 0;
-        document.getElementById("nextMonthBtn").disabled = currentMonthIdx === MONTHS.length - 1;
-        renderCalendar();
-        return;
-      }
+/* ─── ICS / GOOGLE CALENDAR ───────────────────── */
+function downloadICS(title, start, end, campus, note) {
+  const f = s => s.replace(/-/g,"");
+  const blob = new Blob([
+    ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Botho University//EN",
+     "BEGIN:VEVENT",
+     "DTSTART;VALUE=DATE:"+f(start),
+     "DTEND;VALUE=DATE:"+f(end),
+     "SUMMARY:"+title,
+     "DESCRIPTION:Campus: "+campus.join(", ")+(note?" | "+note:""),
+     "END:VEVENT","END:VCALENDAR"].join("\r\n")
+  ], {type:"text/calendar;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = title.replace(/[^a-z0-9]/gi,"_")+".ics";
+  a.click();
+}
+function gLink(title,start,end,campus,note) {
+  const f=s=>s.replace(/-/g,"");
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${f(start)}/${f(end)}&details=${encodeURIComponent("Campus: "+campus.join(", ")+(note?" | "+note:""))}`;
+}
 
-      searchActive = true;
-      currentSelectedDay = null;
-      panel.style.display = "none";
+/* ─── EVENT CARD HTML ─────────────────────────── */
+function cardHTML(ev, displayDate) {
+  const cfg  = TYPE_CFG[ev.type] || TYPE_CFG.event;
+  const isCustom = !!ev._id;
+  const showDate = displayDate || ev.start;
+  const chipCls  = isCustom ? "date-chip custom-chip" : "date-chip";
+  const campusBadges = ev.campus.map(c=>`<span class="badge-campus">${c}</span>`).join("");
+  const customTag    = isCustom ? `<span class="custom-tag">MY EVENT</span>` : "";
+  const noteHtml     = ev.note ? `<div class="event-note">⚠ ${ev.note}</div>` : "";
+  const rangeHtml    = ev.start!==ev.end ? `<div class="event-duration">${fmtShort(ev.start)} → ${fmtShort(ev.end)}</div>` : "";
+  const delBtn       = isCustom ? `<button class="btn-delete" onclick="deleteEvent('${ev._id}')">🗑 Remove</button>` : "";
 
-      document.getElementById("prevMonthBtn").disabled = true;
-      document.getElementById("nextMonthBtn").disabled = true;
+  // safe strings for onclick attrs
+  const st  = ev.title.replace(/\\/g,"\\\\").replace(/'/g,"\\'");
+  const sn  = (ev.note||"").replace(/\\/g,"\\\\").replace(/'/g,"\\'");
+  const ca  = JSON.stringify(ev.campus);
 
-      upcomingHeading.innerText = `Search Results Matrix`;
+  return `<div class="event-card" style="border-left:4px solid ${cfg.dot};">
+    <div class="event-date-row">
+      <span class="${chipCls}">📅 ${fmtChip(showDate)}</span>
+      ${customTag}
+    </div>
+    <div class="event-title">${ev.title}</div>
+    <div class="event-meta">
+      <span class="badge-type" style="background:${cfg.dot}18;color:${cfg.dot};">${cfg.label}</span>
+      ${campusBadges}
+    </div>
+    ${noteHtml}${rangeHtml}
+    <div class="btn-group">
+      <button class="btn-cal" onclick="downloadICS('${st}','${ev.start}','${ev.end}',${ca},'${sn}')">📅 Add to Calendar</button>
+      <a class="btn-gcal" href="${gLink(ev.title,ev.start,ev.end,ev.campus,ev.note)}" target="_blank" rel="noreferrer">🌐 Google Cal</a>
+      ${delBtn}
+    </div>
+  </div>`;
+}
 
-      const results = EVENTS.filter(ev => {
-        const matchesCampus = currentCampusFilter === "ALL" || ev.campus.includes(currentCampusFilter);
-        const matchesQuery = ev.title.toLowerCase().includes(target) || 
-                             (ev.note && ev.note.toLowerCase().includes(target)) ||
-                             ev.type.toLowerCase().includes(target);
-        return matchesCampus && matchesQuery;
+/* ─── DELETE CUSTOM EVENT ─────────────────────── */
+function deleteEvent(id) {
+  const list = loadCustom().filter(e=>e._id!==id);
+  saveCustom(list);
+  rebuild();
+  renderCalendar();
+  renderMyEvents();
+}
+
+/* ─── RENDER CALENDAR ─────────────────────────── */
+function renderCalendar() {
+  if (searchActive) return;
+
+  const mk = MONTH_KEYS[monthIdx];
+  document.getElementById("monthTitle").textContent = MONTHS[monthIdx];
+  document.getElementById("monthSub").textContent   = `${monthIdx+1} of ${MONTHS.length}`;
+
+  const [yr, mo] = mk.split("-").map(Number);
+  const total   = daysIn(yr, mo-1);
+  const startDow= new Date(yr, mo-1, 1).getDay();
+
+  const grid = document.getElementById("daysGrid");
+  grid.innerHTML = "";
+  for (let i=0;i<startDow;i++) grid.appendChild(document.createElement("div"));
+
+  for (let d=1; d<=total; d++) {
+    const dk = `${mk}-${String(d).padStart(2,"0")}`;
+    const evs = (eventMap[dk]||[]).filter(e=>campusFilter==="ALL"||e.campus.includes(campusFilter));
+    const isSel   = selDay===d;
+    const isToday = todayKey()===dk;
+    const types   = [...new Set(evs.map(e=>e.type))];
+
+    const cell = document.createElement("div");
+    cell.className = ["day-cell", evs.length?"has-events":"", isSel?"selected":"", isToday?"today":""].filter(Boolean).join(" ");
+    cell.innerHTML = `<span class="day-num">${d}</span>`;
+
+    if (evs.length) {
+      const dots = document.createElement("div");
+      dots.className = "dots-container";
+      types.forEach(t=>{
+        const dot=document.createElement("div");
+        dot.className="dot"; dot.style.background=TYPE_CFG[t]?.dot||"#888";
+        dots.appendChild(dot);
       });
-
-      if (results.length === 0) {
-        upcomingListContainer.innerHTML = `<div class="no-events">No matching results found under this filter scope.</div>`;
-        return;
-      }
-
-      let searchResultsHTML = "";
-      results.forEach(ev => {
-        searchResultsHTML += createEventCardMarkup(ev);
-      });
-      upcomingListContainer.innerHTML = searchResultsHTML;
+      cell.appendChild(dots);
+      cell.onclick = () => { selDay = selDay===d?null:d; renderCalendar(); };
     }
+    grid.appendChild(cell);
+  }
 
-    function buildLegend() {
-      const legend = document.getElementById("legend");
-      Object.entries(TYPE_CONFIG).forEach(([k, v]) => {
-        const item = document.createElement("div");
-        item.className = "legend-item";
-        item.innerHTML = `<div class="legend-dot" style="background: ${v.dot}"></div><span>${v.label}</span>`;
-        legend.appendChild(item);
+  // Monthly list – first occurrence of each event in month
+  const seen = new Set(), listed = [];
+  for (let d=1; d<=total; d++) {
+    const dk = `${mk}-${String(d).padStart(2,"0")}`;
+    (eventMap[dk]||[])
+      .filter(e=>campusFilter==="ALL"||e.campus.includes(campusFilter))
+      .forEach(ev => {
+        const uid = ev._id||`${ev.title}|${ev.start}`;
+        if (!seen.has(uid)) { seen.add(uid); listed.push({ev, dk}); }
       });
-    }
+  }
 
-    // Event Registration Hooks
-    document.getElementById("prevMonthBtn").onclick = () => {
-      if (currentMonthIdx > 0) {
-        currentMonthIdx--;
-        currentSelectedDay = null;
-        renderCalendar();
-      }
-    };
+  document.getElementById("upcomingHeading").textContent = `Upcoming in ${MONTHS[monthIdx].split(" ")[0]}`;
+  const ul = document.getElementById("monthlyUpcomingList");
+  ul.innerHTML = listed.length
+    ? listed.map(({ev,dk})=>cardHTML(ev,dk)).join("")
+    : `<div class="no-events">No events for this campus this month.</div>`;
 
-    document.getElementById("nextMonthBtn").onclick = () => {
-      if (currentMonthIdx < MONTHS.length - 1) {
-        currentMonthIdx++;
-        currentSelectedDay = null;
-        renderCalendar();
-      }
-    };
+  renderDayPanel();
+}
 
-    document.getElementById("campusFilters").addEventListener("click", (e) => {
-      if (e.target.classList.contains("filter-btn")) {
-        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-        e.target.classList.add("active");
-        currentCampusFilter = e.target.getAttribute("data-campus");
-        currentSelectedDay = null;
+/* ─── DAY PANEL ───────────────────────────────── */
+function renderDayPanel() {
+  const panel = document.getElementById("selectedDayPanel");
+  if (!selDay||searchActive) { panel.style.display="none"; return; }
 
-        const searchVal = document.getElementById("eventSearch").value;
-        if (searchActive && searchVal !== "") {
-          handleGlobalSearch(searchVal);
-        } else {
-          renderCalendar();
-        }
-      }
-    });
+  const mk  = MONTH_KEYS[monthIdx];
+  const dk  = `${mk}-${String(selDay).padStart(2,"0")}`;
+  const evs = (eventMap[dk]||[]).filter(e=>campusFilter==="ALL"||e.campus.includes(campusFilter));
+  const [yr]= mk.split("-").map(Number);
 
-    document.getElementById("eventSearch").addEventListener("input", (e) => {
-      handleGlobalSearch(e.target.value);
-    });
+  panel.innerHTML = `<div class="event-panel">
+    <div class="panel-header">
+      <div>
+        <div style="font-size:16px;font-weight:bold;color:#800000;">${MONTHS[monthIdx].split(" ")[0]} ${selDay}, ${yr}</div>
+        <div style="font-size:12px;color:#444;margin-top:2px;">${evs.length} event${evs.length!==1?"s":""} on this day</div>
+      </div>
+      <button class="close-btn" onclick="selDay=null;renderCalendar()">×</button>
+    </div>
+    <div class="panel-body">
+      ${evs.length ? evs.map(ev=>cardHTML(ev,dk)).join("") : `<div class="no-events">No events match your current filter.</div>`}
+    </div>
+  </div>`;
+  panel.style.display = "block";
+}
 
-    // App Initialize
-    buildEventMap();
-    buildLegend();
+/* ─── SEARCH ──────────────────────────────────── */
+function handleSearch(q) {
+  const t = q.trim().toLowerCase();
+  const ul = document.getElementById("monthlyUpcomingList");
+  const panel = document.getElementById("selectedDayPanel");
+
+  if (!t) {
+    searchActive = false;
+    document.getElementById("prevMonthBtn").disabled = monthIdx===0;
+    document.getElementById("nextMonthBtn").disabled = monthIdx===MONTHS.length-1;
+    renderCalendar(); return;
+  }
+  searchActive = true; selDay = null;
+  panel.style.display = "none";
+  document.getElementById("prevMonthBtn").disabled = true;
+  document.getElementById("nextMonthBtn").disabled = true;
+  document.getElementById("upcomingHeading").textContent = "Search Results";
+
+  const res = ALL_EVENTS.filter(ev =>
+    (campusFilter==="ALL"||ev.campus.includes(campusFilter)) &&
+    (ev.title.toLowerCase().includes(t)||(ev.note||"").toLowerCase().includes(t)||ev.type.toLowerCase().includes(t))
+  );
+  ul.innerHTML = res.length
+    ? res.map(ev=>cardHTML(ev,null)).join("")
+    : `<div class="no-events">No results for "${q}".</div>`;
+}
+
+/* ─── DASHBOARD ───────────────────────────────── */
+function openDashboard(tab) {
+  document.getElementById("overlay").classList.add("open");
+  document.body.style.overflow = "hidden";
+  switchTab(tab||"add");
+  // Pre-fill start date from current month / selected day
+  if (tab==="add") {
+    const mk = MONTH_KEYS[monthIdx];
+    const pre = selDay ? `${mk}-${String(selDay).padStart(2,"0")}` : `${mk}-01`;
+    document.getElementById("newStart").value = pre;
+    document.getElementById("newEnd").value   = pre;
+  }
+}
+function closeDashboard() {
+  document.getElementById("overlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+function handleOverlayClick(e) { if (e.target===document.getElementById("overlay")) closeDashboard(); }
+
+function switchTab(tab) {
+  document.getElementById("tabAdd").classList.toggle("active", tab==="add");
+  document.getElementById("tabMine").classList.toggle("active", tab==="mine");
+  document.getElementById("panelAdd").style.display  = tab==="add"  ? "" : "none";
+  document.getElementById("panelMine").style.display = tab==="mine" ? "" : "none";
+  if (tab==="mine") renderMyEvents();
+}
+
+/* ─── MY EVENTS LIST IN DASHBOARD ────────────── */
+function renderMyEvents() {
+  const customs = loadCustom();
+  const el = document.getElementById("myEventsList");
+  if (!customs.length) {
+    el.innerHTML = `<div class="no-custom">You haven't added any custom events yet.</div>`; return;
+  }
+  el.innerHTML = customs.map(ev => {
+    const cfg = TYPE_CFG[ev.type]||TYPE_CFG.event;
+    const dateLabel = ev.start===ev.end ? fmtShort(ev.start) : `${fmtShort(ev.start)} → ${fmtShort(ev.end)}`;
+    return `<div class="my-event-row">
+      <div class="my-event-info">
+        <div class="my-event-title" style="border-left:3px solid ${cfg.dot};padding-left:8px;">${ev.title}</div>
+        <div class="my-event-dates">📅 ${dateLabel} &nbsp;·&nbsp; ${ev.campus.join(", ")}</div>
+      </div>
+      <button class="btn-delete" onclick="deleteEvent('${ev._id}')">🗑</button>
+    </div>`;
+  }).join("");
+}
+
+/* ─── CAMPUS TOGGLES (dashboard form) ────────── */
+document.getElementById("campusToggles").addEventListener("click", e => {
+  const btn = e.target.closest(".campus-toggle");
+  if (btn) btn.classList.toggle("on");
+});
+
+/* ─── SUBMIT NEW EVENT ────────────────────────── */
+function submitEvent() {
+  const title  = document.getElementById("newTitle").value.trim();
+  const start  = document.getElementById("newStart").value;
+  const end    = document.getElementById("newEnd").value;
+  const type   = document.getElementById("newType").value;
+  const note   = document.getElementById("newNote").value.trim();
+  const campus = [...document.querySelectorAll(".campus-toggle.on")].map(b=>b.dataset.c);
+
+  const errEl = document.getElementById("formError");
+  const okEl  = document.getElementById("formSuccess");
+  errEl.classList.remove("show"); okEl.classList.remove("show");
+
+  if (!title)          { errEl.textContent="Please enter an event title.";        errEl.classList.add("show"); return; }
+  if (!start)          { errEl.textContent="Please select a start date.";         errEl.classList.add("show"); return; }
+  if (!end)            { errEl.textContent="Please select an end date.";          errEl.classList.add("show"); return; }
+  if (end < start)     { errEl.textContent="End date must be on or after start."; errEl.classList.add("show"); return; }
+  if (!type)           { errEl.textContent="Please select an event type.";        errEl.classList.add("show"); return; }
+  if (!campus.length)  { errEl.textContent="Please select at least one campus.";  errEl.classList.add("show"); return; }
+
+  const ev = { _id:"c_"+Date.now(), title, start, end, type, campus, note:note||undefined };
+  const list = loadCustom();
+  list.push(ev);
+  saveCustom(list);
+  rebuild();
+
+  okEl.classList.add("show");
+  document.getElementById("submitBtn").disabled = true;
+
+  setTimeout(()=>{
+    closeDashboard();
+    document.getElementById("submitBtn").disabled = false;
+    okEl.classList.remove("show");
+    // Reset form
+    ["newTitle","newNote"].forEach(id=>document.getElementById(id).value="");
+    document.getElementById("newType").value="";
+    document.querySelectorAll(".campus-toggle.on").forEach(b=>b.classList.remove("on"));
+    // Jump to that month
+    const mk = start.substring(0,7);
+    const mi = MONTH_KEYS.indexOf(mk);
+    if (mi!==-1) { monthIdx=mi; selDay=null; }
     renderCalendar();
-  </script>
+  }, 1300);
+}
+
+/* ─── LEGEND ──────────────────────────────────── */
+function buildLegend() {
+  const leg = document.getElementById("legend");
+  Object.entries(TYPE_CFG).forEach(([,v])=>{
+    const item = document.createElement("div");
+    item.className = "legend-item";
+    item.innerHTML = `<div class="legend-dot" style="background:${v.dot}"></div><span>${v.label}</span>`;
+    leg.appendChild(item);
+  });
+}
+
+/* ─── WIRING ──────────────────────────────────── */
+document.getElementById("prevMonthBtn").onclick = ()=>{ if(monthIdx>0){monthIdx--;selDay=null;renderCalendar();} };
+document.getElementById("nextMonthBtn").onclick = ()=>{ if(monthIdx<MONTHS.length-1){monthIdx++;selDay=null;renderCalendar();} };
+
+document.getElementById("campusFilters").addEventListener("click", e=>{
+  const btn = e.target.closest(".filter-btn");
+  if (!btn) return;
+  document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  campusFilter = btn.dataset.campus;
+  selDay = null;
+  const q = document.getElementById("eventSearch").value;
+  searchActive && q ? handleSearch(q) : renderCalendar();
+});
+
+document.getElementById("eventSearch").addEventListener("input", e=>handleSearch(e.target.value));
+
+/* ─── INIT ────────────────────────────────────── */
+rebuild();
+buildLegend();
+renderCalendar();
+</script>
 </body>
 </html>
